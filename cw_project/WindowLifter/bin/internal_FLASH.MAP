@@ -40,15 +40,15 @@ Link map of __start
      4] EXCEPTION_HANDLERS found as linker generated symbol
      4] EXCEP_DefaultExceptionHandler (func,global) found in Exceptions.o 
     3] PIT_device_init (func,global) found in PIT.o 
-    3] func_500us (func,global) found in dummy.o 
-     4] @LOCAL@func_500us__Fv@count_cycle1ms (object,local) found in dummy.o 
-     4] @LOCAL@func_500us__Fv@count_antipinch@0 (object,local) found in dummy.o 
-     4] state_machine_1ms (func,global) found in dummy.o 
-      5] state (object,global) found in dummy.o 
-      5] count_gen (object,global) found in dummy.o 
-      5] level (object,global) found in dummy.o 
-      5] @106 (object,local) found in dummy.o 
-      5] out_leds (func,global) found in dummy.o 
+    3] Func_500us (func,global) found in APP.o 
+     4] @LOCAL@Func_500us__Fv@count_cycle1ms (object,local) found in APP.o 
+     4] @LOCAL@Func_500us__Fv@count_antipinch@0 (object,local) found in APP.o 
+     4] State_Machine_1ms (func,global) found in APP.o 
+      5] state (object,global) found in APP.o 
+      5] count_gen (object,global) found in APP.o 
+      5] level (object,global) found in APP.o 
+      5] @106 (object,local) found in APP.o 
+      5] Out_Leds (func,global) found in APP.o 
       5] delay_ms (func,global) found in main.o 
     3] PIT_channel_configure (func,global) found in PIT.o 
      4] PIT_Callback (object,global) found in PIT.o 
@@ -71,12 +71,12 @@ Link map of __start
     3] .text.41 (notype,local) found in main.o 
     3] .text (section,local) found in pll.o 
     3] .text.23 (notype,local) found in pll.o 
-    3] .text (section,local) found in dummy.o 
-    3] .text.111 (notype,local) found in dummy.o 
     3] .text (section,local) found in PIT.o 
     3] .text.44 (notype,local) found in PIT.o 
     3] .text (section,local) found in GPIO.o 
     3] .text.47 (notype,local) found in GPIO.o 
+    3] .text (section,local) found in APP.o 
+    3] .text.111 (notype,local) found in APP.o 
     3] .init (section,local) found in Runtime.PPCEABI.VS.UC.a __start.o
     3] .init.130 (notype,local) found in Runtime.PPCEABI.VS.UC.a __start.o
     3] .text (section,local) found in Runtime.PPCEABI.VS.UC.a runtime.o
@@ -179,24 +179,24 @@ Link map of __start
   000001ee 000088 000021ee 0000091e  2 initModesAndClock 	pll.o 
   UNUSED   00000c ........ ........    initPeriClkGen pll.o 
   00000276 000000 00002276 000009a6  1 .text.23 	pll.o 
-  00000276 00057a 00002276 000009a6  1 .text 	dummy.o 
-  00000276 00006a 00002276 000009a6  2 func_500us 	dummy.o 
-  000002e0 0001d6 000022e0 00000a10  2 out_leds 	dummy.o 
-  000004b6 00033a 000024b6 00000be6  2 state_machine_1ms 	dummy.o 
-  000007f0 000000 000027f0 00000f20  1 .text.111 	dummy.o 
-  000007f0 0000d0 000027f0 00000f20  1 .text 	PIT.o 
-  000007f0 00000a 000027f0 00000f20  2 PIT_device_init 	PIT.o 
-  000007fa 00005a 000027fa 00000f2a  2 PIT_channel_configure 	PIT.o 
-  00000854 000018 00002854 00000f84  2 PIT_channel_start 	PIT.o 
+  00000276 0000d0 00002276 000009a6  1 .text 	PIT.o 
+  00000276 00000a 00002276 000009a6  2 PIT_device_init 	PIT.o 
+  00000280 00005a 00002280 000009b0  2 PIT_channel_configure 	PIT.o 
+  000002da 000018 000022da 00000a0a  2 PIT_channel_start 	PIT.o 
   UNUSED   000018 ........ ........    PIT_channel_stop PIT.o 
-  0000086c 000054 0000286c 00000f9c  2 PIT_channel_0_isr 	PIT.o 
-  000008c0 000000 000028c0 00000ff0  1 .text.44 	PIT.o 
-  000008c0 000370 000028c0 00000ff0  1 .text 	GPIO.o 
-  000008c0 0000d2 000028c0 00000ff0  2 vfnGPIO_Init_channel 	GPIO.o 
-  00000992 00001e 00002992 000010c2  2 vfnGPIO_Output 	GPIO.o 
+  000002f2 000054 000022f2 00000a22  2 PIT_channel_0_isr 	PIT.o 
+  00000346 000000 00002346 00000a76  1 .text.44 	PIT.o 
+  00000346 000370 00002346 00000a76  1 .text 	GPIO.o 
+  00000346 0000d2 00002346 00000a76  2 vfnGPIO_Init_channel 	GPIO.o 
+  00000418 00001e 00002418 00000b48  2 vfnGPIO_Output 	GPIO.o 
   UNUSED   000128 ........ ........    vfnGPIO_FlashMainLED GPIO.o 
-  000009b0 000280 000029b0 000010e0  2 vfnGPIO_LED_Init 	GPIO.o 
-  00000c30 000000 00002c30 00001360  1 .text.47 	GPIO.o 
+  00000436 000280 00002436 00000b66  2 vfnGPIO_LED_Init 	GPIO.o 
+  000006b6 000000 000026b6 00000de6  1 .text.47 	GPIO.o 
+  000006b6 00057a 000026b6 00000de6  1 .text 	APP.o 
+  000006b6 00006a 000026b6 00000de6  2 Func_500us 	APP.o 
+  00000720 0001d6 00002720 00000e50  2 Out_Leds 	APP.o 
+  000008f6 00033a 000028f6 00001026  2 State_Machine_1ms 	APP.o 
+  00000c30 000000 00002c30 00001360  1 .text.111 	APP.o 
   00000c30 000064 00002c30 00001360  1 .text 	Runtime.PPCEABI.VS.UC.a runtime.o
   00000c30 00004a 00002c30 00001360  2 __save_gpr 	Runtime.PPCEABI.VS.UC.a runtime.o
   UNUSED   000000 ........ ........    _savegpr_14 Runtime.PPCEABI.VS.UC.a runtime.o
@@ -367,27 +367,27 @@ extabindex section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000020 40001340 00001800  1 .data 	dummy.o 
-  00000000 000020 40001340 00001800  4 @106 	dummy.o 
+  00000000 000020 40001340 00001800  1 .data 	APP.o 
+  00000000 000020 40001340 00001800  4 @106 	APP.o 
 
 
 .sdata section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000001 40001360 00001820  1 .sdata 	dummy.o 
-  00000000 000001 40001360 00001820  1 level 	dummy.o 
+  00000000 000001 40001360 00001820  1 .sdata 	APP.o 
+  00000000 000001 40001360 00001820  1 level 	APP.o 
 
 
 .sbss section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 00000a 40001368 00001828  1 .sbss 	dummy.o 
-  00000000 000001 40001368 00001828  1 state 	dummy.o 
-  00000004 000004 4000136c 0000182c  4 count_gen 	dummy.o 
-  00000008 000001 40001370 00001830  1 @LOCAL@func_500us__Fv@count_cycle1ms 	dummy.o 
-  00000009 000001 40001371 00001831  1 @LOCAL@func_500us__Fv@count_antipinch@0 	dummy.o 
+  00000000 00000a 40001368 00001828  1 .sbss 	APP.o 
+  00000000 000001 40001368 00001828  1 state 	APP.o 
+  00000004 000004 4000136c 0000182c  4 count_gen 	APP.o 
+  00000008 000001 40001370 00001830  1 @LOCAL@Func_500us__Fv@count_cycle1ms 	APP.o 
+  00000009 000001 40001371 00001831  1 @LOCAL@Func_500us__Fv@count_antipinch@0 	APP.o 
 
 
 .sdata2 section layout
@@ -431,12 +431,12 @@ Memory map:
                .sdata2 40001374 00000000 00001828 00003028 00003028          0
                 .sbss2 40001374 00000000 00001828 00003028 00003028          0
                   .bss 40001378 00000020 00001828 00003028 00003028          0
-      .PPC.EMB.apuinfo 00005bb8 00000000 000073e0 00008be0 00008be0          0
+      .PPC.EMB.apuinfo 00005c60 00000000 00007490 00008c88 00008c88          0
          .debug_abbrev          00000129 00001828
-           .debug_info          000018ee 00001951
-           .debug_line          00002ab1 0000323f
-            .debug_loc          00000573 00005cf0
-       .debug_pubnames          00000494 00006263
+           .debug_info          00001924 00001951
+           .debug_line          00002b25 00003275
+            .debug_loc          00000573 00005d9a
+       .debug_pubnames          00000494 0000630d
 
 
 Linker generated symbols:

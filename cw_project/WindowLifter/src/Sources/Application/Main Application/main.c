@@ -5,7 +5,7 @@
 /** GPIO funtion prototypes  */
 #include    "GPIO.h"
 #include    "PIT.h"
-#include    "dummy.h"
+#include    "APP.h"
 
 
 void disableWatchdog(void) 
@@ -45,20 +45,14 @@ int main(void)
 {
 
 	initModesAndClock();
-	/* Disable Watchdog */
 	disableWatchdog();
-	/*Initialize LEDs on TRK-MPC560xB board */
 	vfnGPIO_LED_Init();	
-	/*Initialize Interrupts */
 	INTC_InitINTCInterrupts();
-	/*Timer Config*/
 	timer_config();
-	/*Initialize Exception Handlers */
 	EXCEP_InitExceptionHandlers();
 	PIT_device_init();
-    PIT_channel_configure(PIT_CHANNEL_0 , func_500us);	
+    PIT_channel_configure(PIT_CHANNEL_0 , Func_500us);	
     PIT_channel_start(PIT_CHANNEL_0);
-    /* Enable External Interrupts*/
     enableIrq();
     
     while(1)

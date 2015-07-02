@@ -1,15 +1,15 @@
 /*******************************************************************************/
 /**
-\file       dummy.h
-\brief      Dummy Functions
-\author     Francisco Martinez
+\file       APP.h
+\brief      state machine for window lifter
+\author     Erick Salinas
 \version    1.0
 \date       04/04/2014
 */
 /*******************************************************************************/
 
-#ifndef _DUMMY_H        /*prevent duplicated includes*/
-#define _DUMMY_H
+#ifndef _APP_H        /*prevent duplicated includes*/
+#define _APP_H
 
 /*-- Includes ----------------------------------------------------------------*/
 
@@ -56,6 +56,7 @@
 #define 	LEVEL8			8
 #define 	LEVEL9			9
 
+#define		t_10ms			10
 #define		t_500ms			500
 #define		t_400ms			400
 #define		t_5000ms		5000
@@ -72,7 +73,7 @@
 /*-- Function Prototypes -----------------------------------------------------*/
 
 
-extern void func_500us(void);
+extern void Func_500us(void);
 
 
 #endif /* _DUMMY_H */
