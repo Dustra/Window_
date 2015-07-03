@@ -73,7 +73,7 @@ extern void Func_500us(void);
 
 /* Exported defines */
 
-/*
+
 #define		state_initial 		0
 #define		state_up_aut		1
 #define 	state_down_aut		2
@@ -82,8 +82,8 @@ extern void Func_500us(void);
 #define 	state_up_inter		5
 #define 	state_down_inter	6
 #define		state_antipinch		7
-*/
 
+/*
 enum N_STATES
 {
 	
@@ -96,7 +96,7 @@ enum N_STATES
  		state_down_inter,	
 		state_antipinch			
 		
-};
+};*/
 
 #define 	ON_LED_UP		LED_ON(RA14)
 #define 	OFF_LED_UP		LED_OFF(RA14)
@@ -108,7 +108,7 @@ enum N_STATES
 #define		UP_PUSH			INPUT(PUSH1)
 #define		DOWN_PUSH		INPUT(PUSH2)
 
-/*
+
 #define 	LEVEL_MAX		10
 #define		LEVEL_MIN		0
 #define 	LEVEL1			1
@@ -120,8 +120,8 @@ enum N_STATES
 #define 	LEVEL7			7
 #define 	LEVEL8			8
 #define 	LEVEL9			9
-*/
 
+/*
 enum N_LEVELS
 {
 	LEVEL_MIN=0,
@@ -137,7 +137,7 @@ enum N_LEVELS
 	LEVEL_MAX 
 	
 };
-
+*/
 
 
 #define		t_10ms			10

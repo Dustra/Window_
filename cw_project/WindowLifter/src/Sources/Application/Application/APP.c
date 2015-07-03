@@ -306,14 +306,21 @@ void Func_500us(void)
 			if(DOWN_PUSH==DEACTIVATED && rul_count_gen<t_500ms)
 			{
 				rub_state=state_down_aut;
-				rub_level--;
+				if(rub_level>0)
+				{
+					rub_level--;	
+				}
+			
 				rul_count_gen=0;
 			}
 			
 			if(DOWN_PUSH==ACTIVATED && rul_count_gen>t_500ms)
 			{
 				rub_state=state_down_manual;
-				rub_level--;
+				if(rub_level>0)
+				{
+					rub_level--;	
+				}
 				rul_count_gen=0;
 			}
 		
@@ -408,10 +415,11 @@ void Func_500us(void)
 			{
 				
 				rub_level++;
+				OFF_LED_UP;
 				rul_count_gen=0;
 			}
 				
-			OFF_LED_UP;
+			
 			
 			if(UP_PUSH==DEACTIVATED)
 			{
@@ -419,7 +427,10 @@ void Func_500us(void)
 				OFF_LED_UP;
 			}
 			
-			
+			if(rub_level>LEVEL_MAX-1)
+			{
+				OFF_LED_UP;
+			}
 			
 
 			break;
@@ -435,14 +446,20 @@ void Func_500us(void)
 			{
 				
 				rub_level--;
+				OFF_LED_DOWN;
 				rul_count_gen=0;
 			}
 				
-			OFF_LED_DOWN;
+			
 			
 			if(DOWN_PUSH==DEACTIVATED)
 			{
 				rub_state=state_initial;
+				OFF_LED_DOWN;
+			}
+			
+			if(rub_level<LEVEL_MIN+1)
+			{
 				OFF_LED_DOWN;
 			}
 
