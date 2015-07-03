@@ -1,64 +1,126 @@
 /*******************************************************************************/
-/**
-\file       APP.c
-\brief      State_machine for window lifter
-\author     Erick Salinas
-\version    1.0
-\date       04/04/2014
-*/
-/****************************************************************************************************/
+/*============================================================================*/
+/*                        SV C CE SOFTWARE GROUP                              */
+/*============================================================================*/
+/*                        OBJECT SPECIFICATION                                */
+/*============================================================================*
+* C Source:        APP.c
+* Instance:         RPL_1
+* %version:         2 %
+* %created_by:      uid02495 %
+* %date_created:   	Wed July  1 14:38:03 2004 %
+*=============================================================================*/
+/* DESCRIPTION : C source template file                                       */
+/*============================================================================*/
+/* FUNCTION COMMENT : This file describes the statemachine working by PIT 	  */
+/* Interruptions	                                                 		  */
+/*                                                                            */
+/*============================================================================*/
+/*                               OBJECT HISTORY                               */
+/*============================================================================*/
+/*  REVISION |   DATE      |                               |      AUTHOR      */
+/*----------------------------------------------------------------------------*/
+/*  1.0      | 01/07/2015  |                               | Erick Salinas    */
+/* Integration under Continuus CM                                             */
+/*============================================================================*/
 
-/*****************************************************************************************************
-* Include files
-*****************************************************************************************************/
-
-/** Core modules */
-/** Variable types and common definitions */
+/* Includes */
+/* -------- */
 #include "typedefs.h"
-
-/** Own headers */
-#include "APP.h"
-
-/* GPIO routines prototypes */ 
+#include "APP.h"		/*Services*/
 #include "GPIO.h"
+#include "STM.h"
 
-/** Used modules */
+/* Functions macros, constants, types and datas         */
+/* ---------------------------------------------------- */
+/* Functions macros */
 
-/*****************************************************************************************************
-* Definition of module wide VARIABLEs 
-*****************************************************************************************************/
+/*==================================================*/ 
+/* Definition of constants                          */
+/*==================================================*/ 
+/* BYTE constants */
+
+
+/* WORD constants */
+
+
+/* LONG and STRUCTURE constants */
+
+/*======================================================*/ 
+/* Definition of RAM variables                          */
+/*======================================================*/ 
+/* BYTE RAM variables */
 
 T_UBYTE rub_level=LEVEL_MAX;
 T_UBYTE rub_state=state_initial;
+
+/* WORD RAM variables */
+
+
+/* LONG and STRUCTURE RAM variables */
+
 T_ULONG rul_count_gen=0;
 
-/*****************************************************************************************************
-* Declaration of module wide FUNCTIONs 
-*****************************************************************************************************/
+/*======================================================*/ 
+/* close variable declaration sections                  */
+/*======================================================*/ 
+
+/* Private defines */
+
+
+/* Private functions prototypes */
+/* ---------------------------- */
 
 void State_Machine_1ms(void);
 void Func_500us(void);
 void Out_Leds(void);
 
-/*****************************************************************************************************
-* Definition of module wide MACROs / #DEFINE-CONSTANTs 
-*****************************************************************************************************/
 
-/*****************************************************************************************************
-* Declaration of module wide TYPEs 
-*****************************************************************************************************/
+/* Exported functions prototypes */
+/* ----------------------------- */
 
-/*****************************************************************************************************
-* Definition of module wide (CONST-) CONSTANTs 
-*****************************************************************************************************/
 
-/*****************************************************************************************************
-* Code of module wide FUNCTIONS
-/*****************************************************************************************************/
 
-/*function for the 500us interruption*/
-/*It will activate the func_1ms and detects the antipinch*/
+/* Inline functions */
+/* ---------------- */
+/**************************************************************
+ *  Name                 : inline_func	2
+ *  Description          :
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
 
+
+/* Private functions */
+/* ----------------- */
+/**************************************************************
+ *  Name                 : delay_ms
+ *  Description          : Delay design to stop the system while waiting for desgined time
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void delay_ms(vuint32_t time_ms)
+{
+	TIMER_REGISTER=0;
+	while(TIMER_REGISTER<time_ms*1000)
+	{
+		
+	}
+	
+}
+
+/**************************************************************
+ *  Name                 : Func_500us
+ *  Description          : Function call by PIT, executing every 500us, calling State_Machine_1ms()
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :   [No]
+ **************************************************************/
+ 
+ 
 void Func_500us(void)
 {
 	static T_UBYTE lub_count_cycle1ms=0;
@@ -74,10 +136,10 @@ void Func_500us(void)
 	}
 	
 	
-	if(ANTIPINCH==ACTIVATED && rub_state==state_up_aut)
+	if(ANTIPINCH==ACTIVATED && (rub_state==state_up_aut || rub_state==state_up_manual))
 	{
 		lub_count_antipinch++;
-		if(lub_count_antipinch>20)
+		if(lub_count_antipinch>t_10ms_antipinch)
 		{
 			lub_count_antipinch=0;
 			rub_state=state_antipinch;
@@ -88,9 +150,15 @@ void Func_500us(void)
 	
 }
 
-/*translate the level to the outputs leds*/
-
-void Out_Leds(void)
+/**************************************************************
+ *  Name                 : Out_Leds
+ *  Description          :	Translate the value in variable rub_level to digital outputs
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [No]
+ **************************************************************/
+ 
+ void Out_Leds(void)
 {
 	
 	if(rub_level<LEVEL_MIN)
@@ -159,10 +227,16 @@ void Out_Leds(void)
 	
 	
 }
-
-/*state machine for the different stages of the system*/
-
-void State_Machine_1ms(void)
+ 
+/**************************************************************
+ *  Name                 : State_machine
+ *  Description          :	contains the the main state machine controlling the system
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [yes]*read DSD for internal detail explanation
+ **************************************************************/
+ 
+ void State_Machine_1ms(void)
 {
 
 
@@ -214,6 +288,8 @@ void State_Machine_1ms(void)
 			if(UP_PUSH==ACTIVATED && rul_count_gen>t_500ms)
 			{
 				rub_state=state_up_manual;
+				rub_level++;
+				rul_count_gen=0;
 			}
 		
 		
@@ -237,6 +313,8 @@ void State_Machine_1ms(void)
 			if(DOWN_PUSH==ACTIVATED && rul_count_gen>t_500ms)
 			{
 				rub_state=state_down_manual;
+				rub_level--;
+				rul_count_gen=0;
 			}
 		
 		
@@ -268,6 +346,14 @@ void State_Machine_1ms(void)
 				rul_count_gen=0;
 				
 				}
+				
+				if(DOWN_PUSH==ACTIVATED)
+				{
+					rul_count_gen=0;
+					rub_state= state_initial;
+					delay_ms(500);
+				}
+				
 							
 				}
 	
@@ -299,6 +385,13 @@ void State_Machine_1ms(void)
 				rul_count_gen=0;
 				
 				}
+				
+				if(UP_PUSH==ACTIVATED)
+				{
+					rul_count_gen=0;
+					rub_state= state_initial;
+					delay_ms(500);
+				}
 							
 				}
 			
@@ -307,22 +400,23 @@ void State_Machine_1ms(void)
 		
 		case state_up_manual:
 			
-			if(rub_level<LEVEL_MAX)
+			ON_LED_UP;
+			rul_count_gen++;
+			Out_Leds();
+			
+			if(rub_level<LEVEL_MAX && rul_count_gen>t_400ms)
 			{
 				
-			
-				ON_LED_UP;
 				rub_level++;
-				Out_Leds();
-				delay_ms(t_400ms);
 				rul_count_gen=0;
 			}
 				
 			OFF_LED_UP;
+			
 			if(UP_PUSH==DEACTIVATED)
 			{
 				rub_state=state_initial;
-					
+				OFF_LED_UP;
 			}
 			
 			
@@ -333,21 +427,23 @@ void State_Machine_1ms(void)
 		
 		case state_down_manual:
 		
-			if(rub_level>LEVEL_MIN)
-			{
-			
 			ON_LED_DOWN;
-			rub_level--;
+			rul_count_gen++;
 			Out_Leds();
-			delay_ms(t_400ms);
-			rul_count_gen=0;
 			
+			if(rub_level>LEVEL_MIN && rul_count_gen>t_400ms)
+			{
+				
+				rub_level--;
+				rul_count_gen=0;
 			}
+				
+			OFF_LED_DOWN;
 			
-		    OFF_LED_DOWN;		
 			if(DOWN_PUSH==DEACTIVATED)
 			{
-				rub_state=state_initial;	
+				rub_state=state_initial;
+				OFF_LED_DOWN;
 			}
 
 			
@@ -387,15 +483,20 @@ void State_Machine_1ms(void)
 			break;
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+ 
+
+
+/* Exported functions */
+/* ------------------ */
+/**************************************************************
+ *  Name                 :	export_func
+ *  Description          :
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
+
+
 	
 	
 	
