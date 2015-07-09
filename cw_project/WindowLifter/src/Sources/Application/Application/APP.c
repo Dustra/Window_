@@ -238,6 +238,9 @@ void Func_500us(void)
  
  void State_Machine_1ms(void)
 {
+	
+	char arr[5];
+	arr[10] = 0;
 
 
 	
